@@ -5,6 +5,8 @@ namespace App\UI\Web\Controller;
 use App\Application\Exception\ApplicationException;
 use App\Application\UseCase\RegisterUser;
 use App\Shared\LoggerAwareTrait;
+use App\UI\Web\Form\LoginForm;
+use App\UI\Web\Form\LoginFormDto;
 use App\UI\Web\Form\RegisterForm;
 use App\UI\Web\Form\RegisterFormDto;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
@@ -64,9 +67,17 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name: "security_login")]
-    public function loginAction(): Response
+    public function loginAction(AuthenticationUtils $authenticationUtils): Response
     {
-        return new Response('');
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $form = $this->createForm(LoginForm::class, new LoginFormDto($lastUsername, $this->generateUrl('homepage')));
+
+        return $this->render('security/login.html.twig', [
+            'form' => $form->createView(),
+            'error' => $error?->getMessage()
+        ]);
     }
 
     #[Route('/logout', name: "security_logout")]

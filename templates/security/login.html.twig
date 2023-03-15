@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+{% block body %}
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1>Login</h1>
+
+      {% if error %}
+        <div class="alert alert-danger alert-dismissible">
+          {{ error }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endif %}
+
+      {{ form(form) }}
+{#      <form method="post">#}
+{#        <label for="username">Email:</label>#}
+{#        <input type="text" id="username" name="_username" value="{{ lastUserName }}"/>#}
+
+{#        <label for="password">Password:</label>#}
+{#        <input type="password" id="password" name="_password"/>#}
+
+
+{#        <input type="hidden" name="_target_path" value="{{ path('homepage') }}"/>#}
+
+{#        <button type="submit">login</button>#}
+{#      </form>#}
+    </div>
+  </div>
+{% endblock %}
