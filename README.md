@@ -1,8 +1,8 @@
 ## Planned features
 
 Features:
-- [ ] register
-- [ ] login
+- [x] register
+- [x] login
 - [ ] logout
 - [ ] add task
 - [ ] list tasks
