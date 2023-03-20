@@ -7,6 +7,7 @@ use App\Application\Exception\PasswordException;
 use App\Domain\Entity\User;
 use App\Domain\PasswordPolicy;
 use App\Domain\UserService;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -38,8 +39,8 @@ class RegisterUserHandler implements MessageHandlerInterface
         if ($this->userService->getUserByEmail($command->emailAddress) !== null) {
             throw new EmailAddressReuse("Email address {$command->emailAddress} is taken");
         }
-        $user = new User();
-        $user->setEmail($command->emailAddress);
+        $userId = Uuid::uuid4();
+        $user = new User($userId, $command->emailAddress);
         $user->setPassword($this->passwordHasher->hashPassword($user, $command->password));
         $this->userService->persistUser($user);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Domain;
+namespace App\Tests\unit\Domain;
 
 use App\Domain\PasswordPolicy;
 use PHPUnit\Framework\TestCase;
