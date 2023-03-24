@@ -3,7 +3,7 @@
 Features:
 - [x] register
 - [x] login
-- [ ] logout
+- [x] logout
 - [ ] add task
 - [ ] list tasks
 - [ ] delete task
@@ -24,4 +24,21 @@ REST API:
 - [ ] resolve task
 
 Others:
-- [ ] email notifications about tasks with due date set for today 
+- [ ] email notifications about tasks with due date set for today
+
+### Testing
+
+#### Unit testing
+
+```bash 
+$ bin/phpunit tests/unit
+```
+
+#### Integration tests
+
+> Make sure, that `test` environment is independent of any other environments, as all data will be removed!
+
+```bash
+$ bin/console doctrine:fixtures:load -n -e test
+$ bin/phpunit tests/application
+```
